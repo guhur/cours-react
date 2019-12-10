@@ -10,7 +10,7 @@ const users = (state = [], action) => {
           id: action.id,
           picture: action.picture,
           name: action.name,
-          gender: action.gender
+          gender: action.gender,
         },
       ];
     default:
@@ -32,4 +32,7 @@ const reducer = combineReducers({
   visibilityFilter,
 });
 
-export default createStore(reducer);
+export default createStore(
+  reducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
