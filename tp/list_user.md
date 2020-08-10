@@ -11,7 +11,7 @@ Vous devez implémenter un composant User pour afficher le profil d'un utilisate
 
 **2. Où se situe le composant `User` ?**
 
-**3. Afficher tous les profiles à l'aide de la fonction map dans le fichier `src/index.js` **
+**3. Afficher tous les profiles à l'aide de la fonction map dans le fichier `src/index.js`.**
 
 **4. Ajouter un paragraphe `p` au composant `User` pour afficher la date de naissance sous la forme "Né le 27/02/1942" pour un homme ou "Née le 27/02/1942" pour une femme en utilisant une condition ternaire.**
 
