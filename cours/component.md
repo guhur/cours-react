@@ -4,14 +4,17 @@ A la fin des années 90, Internet était principalement construit autour de HTML
 L'explosion des usages d'Internet mais aussi des supports d'accès (tablettes, téléphones, navigateurs) a requis le développement de nouvelles technologies.
 
 Le CSS s'est renforcé avec Less, Sass, PostCSS, mais aussi des frameworks comme Bootstrap, normalize, ou Tailwind.
-Le JavaScript a subit, pendant un temps, la concurrence d'autres langages comme Flash ou Java, avant sa mise-à-jour vers ES6 et le développement de jQuery.
+Le JavaScript a subi, pendant un temps, la concurrence d'autres langages comme Flash ou Java, avant le développement de jQuery puis sa mise-à-jour vers ES6.
 
-Que s'est-il passé concernant le HTML ? A vrai pas grand chose. Si les standards ont ajouté des balises telles que `canevas`, ou `video` pour faciliter la prise en charge de tous les supports, écrire du HTML est resté répétitif.
+Que s'est-il passé concernant le HTML ? A vrai dire, pas grand chose. Si les standards du HTML5 ont ajouté de nouvelles fonctionnalités avec des balises telles que `canevas`, ou `video`, l'évolution du HTML s'est orienté vers la prise en charge de nouveaux types d'écran, tandis que le développement d'une page HTML est resté fastidieux.
 
-C'est dans l'optique de factoriser le code que les **composants** ont émergés. Le JSX est particulièrement disruptif, puisqu'il propose d'écrire du HTML, du CSS et du JavaScript dans un même fichier. Si cela peut paraître étrange au début, les gains de visibilité dans le code sont particulièrement appréciables une fois que l'on acquiert un peu d'expérience.
+C'est dans cette optique que les [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) ont émergé, afin de rédiger des bouts de codes réutilisables. Le code HTML devenu factorisable, cette technologie devait faciliter le travail des développeurs. Cependant, les usages du web sont devenus si complexes, que la séparation entre le HTML, le JavaScript et le CSS, qui avait encore lieu au sein des web components, s'est avéré obsolète. 
 
-Le JSX est un langage qui est transpilé en JavaScript. Son paradigme fondamental réside dans la création de nouvelles balises HTML.
-Les fichiers JSX ont généralement l'extension de fichiers `.jsx`, mais l'extension `.js` fonctionne dans la plupart des configurations.
+La force du React est d'introduire un nouveau language, le JSX, qui répond à ce problème, puisqu'il propose d'écrire du HTML, du CSS et du JavaScript dans un même fichier. Si cela peut paraître étrange au début, les gains de visibilité dans le code deviennent vite appréciables après une phase d'adaptation.
+
+Le JSX est un langage qui est transpilé en JavaScript. Il reprend l'idée de créer des composants réutilisables, mais propose de manipuler un DOM virtuel plutôt que de modifier directement dans le code source de la page web.
+
+A noté, les fichiers JSX ont généralement l'extension de fichiers `.jsx`, mais l'extension `.js` fonctionne dans la plupart des configurations.
 
 # Transpiler facilement avec create-react-app
 
@@ -70,7 +73,7 @@ const App = () => {
 }
 ```
 
-Comme expliqué dans [le cours de rappel](./cours/rappel.md), cela est strictement équivalent à :
+Comme expliqué dans [le cours de rappel](./cours/javascript.md), ceci est équivalent à :
 
 ```jsx
 const App = () => <h1>Hello, world!</h1>
@@ -78,12 +81,13 @@ const App = () => <h1>Hello, world!</h1>
 
 A ce moment là, nous n'avons fait que stocker en mémoire ce composant, sans que rien ne se produise encore. 
 
-Dans un deuxième temps, nous avons utilisé notre composant -- nous pourrions même dire "instancier" notre composant. 
-Un composant est une extension d'une balise HTML ; aussi pour utiliser notre composant, nous ajoutons des chevrons : `<App></App>`, ou de manière équivalente `<App />`.
+Dans un deuxième temps, nous avons utilisé notre composant -- nous pourrions même dire "instancié" notre composant. 
+Un composant s'utilise de la même manière qu'une balise XML ; aussi pour utiliser notre composant, nous ajoutons des chevrons : `<App></App>`, ou de manière équivalente : `<App />`.
 
 Remarquez que nous retrouvons les balises couramment utilisées en HTML comme `h1` ou `div`.
+Nous pouvons également placer les attributs que nous souhaitons dans notre code.
 
-Nous pouvons également placer les attributs que nous souhaitons dans notre code.  Attention, la définition d'une classe CSS avec l'attribut `class` est un mot déjà utilisé en JavaScript. Il a donc été remplacé par le mot `className`. Par exemple, pour attribuer la class "my-class", nous utilisons `<h1 className="my-class">Hello, world!</h1>`.
+Attention, la définition d'une classe CSS avec l'attribut `class` est un mot déjà utilisé en JavaScript. Il a donc été remplacé par le mot `className`. Par exemple, pour attribuer la class "my-class", nous utilisons `<h1 className="my-class">Hello, world!</h1>`.
 
 # Un composant sous la forme d'une classe
 

@@ -1,3 +1,6 @@
 [submodule "cours4/reactjs-hangman"]
 	path = cours4/reactjs-hangman
 	url = git@github.com:guhur/reactjs-hangman.git
+[submodule "tp/premiers_composants"]
+	path = tp/premiers_composants
+	url = https://github.com/guhur/premiers_composants

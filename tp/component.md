@@ -1,6 +1,6 @@
 # Prise en main des composants
 
-Ce TP propose de rédiger plusieurs composants.
+Ce TP propose de rédiger plusieurs composants. Pour commencer, copiez [le répertoire du projet](https://github.com/guhur/premiers_composants) dans un [nouveau répertoire git](https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/fork-a-repo).
 
 
 ## Questions
