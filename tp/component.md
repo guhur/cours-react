@@ -1,32 +1,20 @@
-# Prise en main des composants
+# TP : création d'un projet React et d'un premier composant.
 
-Ce TP propose de rédiger plusieurs composants. Pour commencer, copiez [le répertoire du projet](https://github.com/guhur/premiers_composants) dans un [nouveau répertoire git](https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/fork-a-repo).
+Ce TP montre comment créer un projet React à partir de zéro. Vous allez créer un premier composant, le designer et l'afficher sur un écran.
 
 
-## Questions
+*1. Installez `[node et npm](https://nodejs.org/en/download/)`, et `[yarn](https://classic.yarnpkg.com/en/docs/install/#debian-stable)` sur vos ordinateurs. Listez les étapes clés de l'installation, comme si vous rédigiez un tutoriel.**
 
-**1. Comment installer le projet ?**
+*2. [Quelle ligne de commande](https://github.com/facebook/create-react-app) faut-il lancer pour créer un projet React ?*
 
-**2. Comment lancer l'application ?**
+*3. Créez un autre projet avec [Guppy](https://github.com/joshwcomeau/guppy). Quelle méthode préférez-vous ?*
 
-**3. Que se passe-t'il lors du lancement de l'application ?**
+*4. Modifiez le projet React nouvellement créer pour supprimer le contenu actuel de l'application*
 
-En regardant dans le code de `src/index.jsx`, vous remarquez que le composant `App` n'est pas utilisé. 
+*5. Créez un nouveau composant avec votre liste de cadeau pour le Père Noel.*
 
-**4. Instanciez le composant. Pourquoi l'application ne fonctionne toujours pas ?**
+*6. [Ajoutez une image](https://create-react-app.dev/docs/adding-images-fonts-and-files/) du Père Noel.*
 
-Dans le fichier `src/button.jsx`, nous trouvons un composant `Button` pourtant. Le problème est subtil, mais expliqué dans le [cours de rappel](./cours/rappel.md).
+*7. [Designez](https://create-react-app.dev/docs/adding-a-stylesheet) la page pour qu'elle ressemble à un thème de Noel.*
 
-**5. Corrigez le problème du `Button`**
-
-Nous allons maintenant personnaliser notre bouton en ajoutant un peu de CSS.
-Pour cela, ajoutez la ligne `import './index.css'` dans le fichier `src/button.jsx`.
-
-**6. Modifiez les fichiers `src/index.css` et `src/button.js` pour que le bouton ait un fond rouge et un texte en blanc**
-
-Nous souhaitons maintenant avoir plusieurs fois le même bouton.
-
-**7. Modifiez le fichier `src/index.jsx` pour dupliquer le bouton en plusieurs exemplaires**
-
-Vous risquez d'obtenir une nouvelle erreur, car un composant ne peut avoir qu'une seule enfant. Cela se résout en encapsulant les différents enfants dans une balise vide : `<></>`.
-
+Le meilleur design aura un point supplémentaire !

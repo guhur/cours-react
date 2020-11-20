@@ -37,7 +37,7 @@ Ce cours reprend les bases de la programmation en JavaScript (variables, conditi
 
 Après créer un projet React, vous allez créer un composant en `JSX` et ajouter un test automatisé.
 
-[Cours](./cours/component.md) - [TP](./tp/button.md)
+[Cours](./cours/component.md) - [TP](./tp/component.md)
 
 ## Cours 3 : réutiliser des composants avec les `props`
 
