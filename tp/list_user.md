@@ -1,29 +1,42 @@
 # TP liste d'utilisateurs
 
-## Objectif
+## Analyse de code
 
-Vous devez implémenter un composant User pour afficher le profil d'un utilisateur et afficher les utilisateurs stockés dans un fichier JSON depuis ce composant.
-
-
-## Questions à partir du projet existant à faire seul (sur /10 points)
-
-**1. Trouver dans le code comment charger le fichier JSON**
-
-**2. Où se situe le composant `User` ?**
-
-**3. Afficher tous les profiles à l'aide de la fonction map dans le fichier `src/index.js`.**
-
-**4. Ajouter un paragraphe `p` au composant `User` pour afficher la date de naissance sous la forme "Né le 27/02/1942" pour un homme ou "Née le 27/02/1942" pour une femme en utilisant une condition ternaire.**
-
-**5. Vérifier que le test passe à partir de `yarn test`**
-
-**6. Où est implémenté ce test ? Décrire les lignes de code de ce test à l'aide de [la documentation](https://reactjs.org/docs/testing-recipes.html).**
-
-**7. Ecrire un autre test pour vérifier que le titre d'un utilisateur contient la valeur attendue. Pour cela, vous pourrez rédiger un autre exemple de profil utilisateur.**
+Analysez le [code situé du projet](https://codesandbox.io/s/react-props-list-from-file-wqwn5) puis répondez aux questions.
 
 
-## Travail en binôme (ou seul) (sur /10 points)
+**1. Quelle ligne charge le fichier JSON dans le code ?**
 
-[Télécharger une liste de films sous le format d'un fichier JSON](https://imdb-api.com/). Cela vous demandera de créer un compte.
+**2. Quelle est la structure de données du fichier JSON ?**
 
-Un membre du binôme implémente une application pour afficher une liste de films, tandis que l'autre rédige des tests. Mettez-vous donc d'accord dès le début sur les tests à faire.
+**3. Justifiez le `User.propTypes`. Quelles données ne sont pas prises en compte ?**
+
+**4. Quelles données sont obligatoires pour construire le composant `User` ?**
+
+**5. A quoi correspond `PropTypes.shape` ?**
+
+**6. Pourquoi l'attribut contient deux accolades ?**
+
+
+**7. Quel est le nom de l'opérateur qui transmet les données du composant `App` vers le composant `User`? Pourquoi est-ce dangereux d'abuser de cet opérateur ?**
+
+
+**8. Ajoutez un paragraphe `p` au composant `User` pour afficher la date de naissance sous la forme "Né le 27/02/1942" pour un homme ou "Née le 27/02/1942" pour une femme en utilisant une condition ternaire. Copiez le code ajouté dans ce document en guise de réponse.**
+
+(Pensez à mettre votre code dans des balises Markdown  !!)
+
+## Rédaction de tests
+**9. Lisez [les recettes de tests](https://fr.reactjs.org/docs/testing-recipes.html#gatsby-focus-wrapper). Rédigez un test pour vérifier que le composant `User` contient une image.**
+
+**10. Rédigez un autre test dans lequel vous créez le composant `User` avec le `name` de votre choix dans le `props` et vérifiez que le composant affiche bien le `name`.**
+
+**11. Faites un test de "capture d'instantanés" en suivant les indications de la documentation**
+
+**12. Proposez 3 autres tests**
+
+
+## Mini-projet 
+
+[Téléchargez une liste de films sous le format d'un fichier JSON](https://imdb-api.com/). Cela vous demandera de créer un compte.
+
+**13. Créez un nouveau projet et affichez les films sous la forme de cartes. Vous devrez soigner le design de la page, sans copiant le code de la liste d'utilisateurs**

@@ -16,7 +16,7 @@ Le JSX est un langage qui est transpilé en JavaScript. Il reprend l'idée de cr
 
 A noté, les fichiers JSX ont généralement l'extension de fichiers `.jsx`, mais l'extension `.js` fonctionne dans la plupart des configurations.
 
-# Transpiler facilement avec create-react-app
+## Gérer facilement les dépendances avec create-react-app
 
 La transpilation doit être faite à chaque modification du code. Pour faciliter l'installation du transpileur, je vous recommande d'installer l'utilitaire `create-react-app`. Vous devez avoir au préalable `npm`, le manager de packets avec une version supérieure à 5.2.
 
@@ -34,7 +34,7 @@ Si le dossier nouvellement créé, `mon-premier-composant`, contient plusieurs f
 - `.git` contient les fichiers paramètres pour s'intégrer à `git`.
 - `node_modules/` est un dossier particulièrement lourd ; il pèse en mémoire généralement plus d'1 Go ! Vous ne devez en aucun cas mettre ce dossier dans votre repo git, car ce dossier peut être reconstruit avec la commande `npm install`.
 
-# Porte d'entrée de votre application
+## Porte d'entrée de votre application
 
 Le fichier `src/index.js` représente la porte d'entrée de votre application. C'est par lui que le transpilateur commence son travail.
 Nous devons donc le créer et expliquer que nous souhaitons installer notre application dans notre page HTML. Pour cela, le code est assez standard :
@@ -47,6 +47,7 @@ import ReactDOM from 'react-dom'
 
 // L'explication est donnée dans la partie suivante
 const App = () => {
+  // La fonction return permet de basculer en mode HTML
   return (
     <h1>Hello, world!</h1>
   )
@@ -60,7 +61,7 @@ ReactDOM.render(<App></App>, root)
 ```
 
 
-# Ecrire son premier composant sous la forme d'une fonction
+## Ecrire son premier composant sous la forme d'une fonction
 
 Dans le code précédent, nous avons créé notre premier composant. 
 Dans un premier temps, nous avons défini l'abstraction de notre composant :
@@ -89,7 +90,7 @@ Nous pouvons également placer les attributs que nous souhaitons dans notre code
 
 Attention, la définition d'une classe CSS avec l'attribut `class` est un mot déjà utilisé en JavaScript. Il a donc été remplacé par le mot `className`. Par exemple, pour attribuer la class "my-class", nous utilisons `<h1 className="my-class">Hello, world!</h1>`.
 
-# Un composant sous la forme d'une classe
+## Un composant sous la forme d'une classe
 
 React propose une syntaxe quasiment équivalente pour les composants définis sous la forme de classes ou de fonctions : 
 
@@ -111,3 +112,79 @@ Le code HTML est situé l'attribut `render`. Comme son nom l'indique, cet attrib
 
 Bien que cette syntaxe soit plus verbeuse, elle est privilégiée dans ce cours, car elle est plus explicite et facilite la compréhension de React.
 
+
+## Basculer entre HTML et JavaScript
+
+De prime abord tarabiscoté, le basculement entre HTML et JavaScript s'avère très pratique avec un peu d'expérience. Commençons directement à s'y familiariser avec un exemple plus délicat : l'usage d'une condition ternaire dans la partie HTML.
+
+```jsx
+import React, { Component } from 'react'
+
+class App extends Component {
+  render () {
+    const bonneHumeur = true;
+    return (
+      <div>
+      <h1>Hello, world!</h1>
+      <p>Aujourd'hui je me sens de { bonneHumeur ? "bonne" : "mauvaise" } humeur.</p>
+      </div>
+    )
+  }
+}
+```
+
+Nous commençons par du JavaScript puis nous basculons en HTML dans le `return`. Enfin, les accolades injectent du JavaScript dans le HTML.
+
+Pour rappel, les conditions ternaires ont la syntaxe : `condition ? si vrai : si faux`.
+
+
+## La politique de l'enfant unique
+
+Pour être valide, le code JSX doit être encapsulé au sein d'une unique balise HTML. Le code suivant est syntactiquement invalide : 
+
+```jsx
+import React, { Component } from 'react'
+
+class App extends Component {
+  render () {
+    const bonneHumeur = true;
+    return (
+      <h1>Hello, world!</h1>
+      <p>Aujourd'hui je me sens de { bonneHumeur ? "bonne" : "mauvaise" } humeur.</p>
+    )
+  }
+}
+```
+
+Plutôt que de rajouter une vraie balise, laquelle risque de troubler le design de la page, la balise `Fragment` encapsule les autres balises sans modifier le code HTML produit :
+
+```jsx
+import React, { Component, Fragment } from 'react'
+
+class App extends Component {
+  render () {
+    const bonneHumeur = true;
+    return (<Fragment>
+      <h1>Hello, world!</h1>
+      <p>Aujourd'hui je me sens de { bonneHumeur ? "bonne" : "mauvaise" } humeur.</p>
+    </Fragment>)
+  }
+}
+```
+
+Cette balise s'avère si utile qu'un alias nettement plus court a été créé :
+
+
+```jsx
+import React, { Component } from 'react'
+
+class App extends Component {
+  render () {
+    const bonneHumeur = true;
+    return (<>
+      <h1>Hello, world!</h1>
+      <p>Aujourd'hui je me sens de { bonneHumeur ? "bonne" : "mauvaise" } humeur.</p>
+    </>)
+  }
+}
+```
