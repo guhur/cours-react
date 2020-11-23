@@ -8,15 +8,15 @@ describe('La fonction anagramme', () => {
   });
 
   test('doit valider deux phrases anagrammes.', () => {
-    expect(anagrams('hello', 'llohe')).toBeTruthy();
-    expect(anagrams('Whoa! Hi!', 'Hi! Whoa!')).toBeTruthy();
-    expect(anagrams('RAIL! SAFETY!', 'fairy tales')).toBeTruthy();
+    expect(anagrammes('hello', 'llohe')).toBeTruthy();
+    expect(anagrammes('Whoa! Hi!', 'Hi! Whoa!')).toBeTruthy();
+    expect(anagrammes('RAIL! SAFETY!', 'fairy tales')).toBeTruthy();
   });
 
   test('doit refuser deux phrass qui ne sont pas des anagrammes.', () => {
-    expect(anagrams('One One', 'Two two two')).toBeFalsy();
-    expect(anagrams('One one', 'One one c')).toBeFalsy();
-    expect(anagrams('A tree, a life, a bench', 'A tree, a fence, a yard')).toBeFalsy();
+    expect(anagrammes('One One', 'Two two two')).toBeFalsy();
+    expect(anagrammes('One one', 'One one c')).toBeFalsy();
+    expect(anagrammes('A tree, a life, a bench', 'A tree, a fence, a yard')).toBeFalsy();
   });
 });
 
