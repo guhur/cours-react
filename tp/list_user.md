@@ -9,14 +9,13 @@ Analysez le [code situé du projet](https://codesandbox.io/s/tp-props-q0wln?file
 
 **2. Quelle est la structure de données du fichier JSON ?**
 
-**3. Justifiez le `User.propTypes`. Donnez des exemples de données ne sont pas prises en compte ?**
+**3. Justifiez le `User.propTypes`. Donnez des exemples de données ne sont pas prises en compte.**
 
 **4. Quelles données sont obligatoires pour construire le composant `User` ?**
 
 **5. A quoi correspond `PropTypes.shape` ?**
 
-**6. Pourquoi l'attribut contient deux accolades ?**
-
+**6. Pourquoi l'attribut `style` contient deux accolades ?**
 
 **7. Quel est le nom de l'opérateur qui transmet les données du composant `App` vers le composant `User`? Pourquoi est-ce dangereux d'abuser de cet opérateur ?**
 
