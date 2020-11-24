@@ -21,6 +21,7 @@ Lisez [le code lié à ce TP](https://codesandbox.io/s/tp-react-form-itrhu?file=
 
 **7. Expliquez la regex pour valider un email. Vous pouvez la recopier dans regex101.com pour vous aider.**
 
+**8. Un composant a été designé avec `styled-components`. En s'aidant de la [documentation de cette librairie](https://styled-components.com/docs/basics#getting-started), expliquez en quoi consiste ce design.**
 
 ## Mini-projet : un timer
 
@@ -30,6 +31,4 @@ Créez un bouton pour démarrer et arrêter le timer. Séparez les secondes des 
 
 Rédigez un test pour vérifier que le timer fonctionne bien. Vous aurez pour cela besoin de mocker la fonction `setInterval` avec [Jest](https://jestjs.io/docs/en/timer-mocks).
 
-
-
-
+Désignez au moins 1 composant avec `styled-components`.

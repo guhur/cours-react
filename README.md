@@ -51,42 +51,22 @@ Les `states` correspondent à l'état interne d'un composant. Modifier le `state
 
 [Cours](./cours/states.md) - [TP](./tp/form.md)
 
+
 ## Cours 5 : ajouter plusieurs pages à son application
 
 [Cours](./cours/router.md) - [TP](./tp/router.md)
+
+# Partie 2 : notions avancées en React
 
 ## Cours 6 : partager des informations entre plusieurs composants avec les contextes
 
 [Cours](./cours/context.md) - [TP](./tp/context.md)
 
-## Cours 7 : les composants d'ordre supérieur
+## Cours 7 : interagir avec un backend
 
-[Cours](./cours/hoc.md) - [TP](./cours/auth.md)
+[Cours](./cours/fetch.md) - [TP](./tp/fetch.md)
 
-# Partie 2 : React et son éco-système 
-
-## Cours 8 : interagir avec un backend
-
-[Cours](./cours/fetch.md) - [TP partie 1](./tp/fetch.md) - [TP partie 2](./tp/pendu.md)
-
-## Cours 9 : ajoutons un peu de design avec `styled-components`
-
-[Cours](./cours/styled-components.md) - [TP](./tp/styled-components.md)
-
-## Cours 10 : ajoutons un peu de design avec Semantic UI
-
-[`Semantic UI`](https://semantic-ui.com/) -- ou son fork [`Fomantic UI`](https://fomantic-ui.com/) -- propose une collection de composants en [React](https://react.semantic-ui.com/). 
-
-[Cours](./cours/semantic.md) - [TP](./tp/semantic-ui.md)
-
-
-## Cours 11 : créer des utilisateurs avec Firebase
-[Cours](./cours/firebase.md) - [TP](./tp/cookies-auth.md)
-
-## Cours 12 : sauvegarder des informations avec Firestore
-[Cours](./cours/firestore.md) - [TP](./tp/advanced-users.md)
-
-## Cours 13 : la génération statique de pages avec Next JS
+## Cours 8 : la génération statique de pages avec Next JS
 [Cours](./cours/nextjs.md) - [TP](./tp/nextjs.md)
 
 
