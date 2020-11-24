@@ -9,7 +9,7 @@ Analysez le [code situé du projet](https://codesandbox.io/s/tp-props-q0wln?file
 
 **2. Quelle est la structure de données du fichier JSON ?**
 
-**3. Justifiez le `User.propTypes`. Quelles données ne sont pas prises en compte ?**
+**3. Justifiez le `User.propTypes`. Donnez des exemples de données ne sont pas prises en compte ?**
 
 **4. Quelles données sont obligatoires pour construire le composant `User` ?**
 
