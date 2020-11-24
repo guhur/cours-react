@@ -2,7 +2,7 @@
 
 ## Analyse de code
 
-Analysez le [code situé du projet](https://codesandbox.io/s/react-props-list-from-file-wqwn5) puis répondez aux questions.
+Analysez le [code situé du projet](https://codesandbox.io/s/tp-props-q0wln?file=/src/App.js) puis répondez aux questions.
 
 
 **1. Quelle ligne charge le fichier JSON dans le code ?**
