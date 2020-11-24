@@ -188,3 +188,33 @@ class App extends Component {
   }
 }
 ```
+
+## Imports et exports nommés
+
+```jsx
+// composants/Navbar.jsx
+
+const NavBar = () => (
+  <ul>
+    <li>Accueil</li>
+    <li>Qui sommes-nous ?</li>
+    <li>Contact</li>
+  </ul>
+);
+
+export default NavBar;
+
+export const NavBarAdmin = () => (
+  <ul>
+    <li>Accueil</li>
+    <li>Qui sommes-nous ?</li>
+    <li>Contact</li>
+  </ul>
+);
+
+
+// App.jsx
+import NavBar, { NavBarAdmin } from './composants.Navbar.jsx'
+```
+
+
