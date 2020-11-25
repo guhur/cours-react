@@ -52,11 +52,11 @@ Les `states` correspondent à l'état interne d'un composant. Modifier le `state
 [Cours](./cours/states.md) - [TP](./tp/form.md)
 
 
+# Partie 2 : notions avancées en React
+
 ## Cours 5 : ajouter plusieurs pages à son application
 
 [Cours](./cours/router.md) - [TP](./tp/router.md)
-
-# Partie 2 : notions avancées en React
 
 ## Cours 6 : partager des informations entre plusieurs composants avec les contextes
 
