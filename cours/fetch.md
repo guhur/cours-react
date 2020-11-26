@@ -1,19 +1,19 @@
 # Interagir avec un backend dans une application React
 
-
 ## Les promesses en JavaScript
-TODO setInterval 
+Lors du TP 4, vous avez utilisé la fonction `setInterval` pour exécuter une fonction toutes les secondes. Lorsque le moteur JavaScript  interprète le code associé, il note dans son "event loop" qu'il exécutera ce code plus tard.
 
-Plus généralement, lorsqu'une instruction ne réalise pas à la même vitesse que l'exécution d'un programme (cas d'un compteur, ou d'une requête à un serveur), elle réalise une opération dite **asynchrone**.
+Le code peut ainsi tourner à plusieurs vitesses : d'un côté l'exécution normale, de l'autre des opérations dites **asynchrones**.
+C'est en particulier le cas lors d'une communication avec un autre serveur : puisque l'autre serveur risque de prendre du temps à répondre, on lance la requête en tant qu'opération asynchrone, l'exécution continue, l'application ne semble pas s'arrêter ; lorsque le serveur répond, la réponse est traitée et l'affichage de l'application est mise à jour.
+
 Une promesse est un objet (`Promise`) qui contrôle une telle opération, en représentant la complétion ou l'échec de l'opération asynchrone mise en jeu.
-
-Comme la promesse ne se réalise pas au moment où elle est exécutée, on y attache deux fonctions de rappel (*callback function*) :
+Parce que la promesse ne se réalise pas au moment où elle est exécutée, deux fonctions de rappel (*callback function*) sont attachées à cette promesse :
 
 - une fonction qui sera exécutée en cas de succès, 
 - et une autre qui sera exécutée en cas d'échec.
 
 ```js
-const examen = new Promise((successCallback, failureCallback) => {
+const examen = new Promise((success, failure) => {
   const note = Math.random() * 20;
   if (note > 10.) {
     successCallback(note);
@@ -23,275 +23,240 @@ const examen = new Promise((successCallback, failureCallback) => {
   }
 })
 
-const successCallback = (result) {
+const examenReussi = (result) {
   console.log(`Bravo ! Vous avez été reçu·e avec ${result}`);
 }
 
 
-function failureCallback(note) {
-  console.error(`Ce n'est pas avec ${note} que vous irez quelque part...`);
+function examenRecale(note) {
+  console.error(`Ce n'est pas avec ${note} que vous passerez l'examen !`);
 }
 ```
 
-TODO Faire un appel à une promesse :
-function faireQqc() {
-  return new Promise((successCallback, failureCallback) => {
-    console.log("C'est fait");
-    // réussir une fois sur deux
-    if (Math.random() > .5) {
-      successCallback("Réussite");
-    } else {
-      failureCallback("Échec");
-    }
-  })
-}
+Le mot clé `new` initialise la promesse, tandis que `then` traite la réponse obtenue par la promesse : 
 
-const promise = faireQqc();
-promise.then(successCallback, failureCallback);
+```jsx
+examen.then(examenReussi, examenRecale);
+```
+
+## Envoyer des requêtes à un serveur
+
+Voyons tout de suite comment appliquer des promesses à des requêtes HTTP. 
+Lors du TP 3, un fichier d'utilisateur a été téléchargé depuis le site `randomuser.me`. Pourquoi pas charger des utilisateurs selon les filtres sélectionnés par l'utilisateur ?
+
+L'envoi d'une requête HTTP s'opère avec la fonction  `fetch`. Cette fonction prend en paramètre l'adresse URL et éventuellement un object contenant des options sur la requête, telles que la méthode POST ou l'authentification. Elle retourne une promesse.
+
+```js
+const nationalite = "fr";
+
+fetch(`https://randomuser.me/api/?nat=${nationalite}`)
+.then(
+  reponse => console.log("La requête a fonctionné"), 
+  error => console.log("La requête a échoué")
+)
+```
+
+On peut simplifier cette syntaxe en introduisant la méthode `catch` qui n'est exécutée que lorsque la promesse a échoué.
+
+```js
+const nationalite = "fr";
+
+fetch(`https://randomuser.me/api/?nat=${nationalite}`)
+.then(reponse => console.log("La requête a fonctionné"))
+.catch(error => console.log("La requête a échoué"))
+```
 
 
-### Avantage d'une promesse
 
-Cette dernière forme est ce qu'on appelle un appel de fonction asynchrone. Cette convention possède différents avantages dont le premier est le chaînage.
-Garanties
+Si la requête est réussie, la promesse se réalise dès que le moteur JavaScript commence à recevoir une donnée HTTP. Il faut encore attendre d'obtenir toute la requête avant de décoder le contenu en JSON. On utilise pour cela la méthode `reponse.json`. 
+Obtenir l'ensemble de la requête risque d'être long. Naturellement, `reponse.json` retourne une seconde promesse. On doit alors **chaîner des promesses**.
 
-À la différence des imbrications de callbacks, une promesse apporte certaines garanties :
 
-- Les callbacks ne seront jamais appelés avant la fin du parcours de la boucle d'évènements JavaScript courante
-- Les callbacks ajoutés grâce à then seront appelés, y compris après le succès ou l'échec de l'opération asynchrone
-- Plusieurs callbacks peuvent être ajoutés en appelant then plusieurs fois, ils seront alors exécutés l'un après l'autre selon l'ordre dans lequel ils ont été insérés.
+## Chaînage des promesses
 
-### Chaînage des promesses
+La méthode `then()` renvoie une nouvelle promesse, différente de la première :
 
-TODO  exemple avec timeout
-Un besoin fréquent est d'exécuter deux ou plus d'opérations asynchrones les unes à la suite des autres, avec chaque opération qui démarre lorsque la précédente a réussi et en utilisant le résultat de l'étape précédente. Ceci peut être réalisé en créant une chaîne de promesses.
+``` 
+const promise1 = fetch(`https://randomuser.me/api/?nat=${nationalite}`)
+.then(
+  reponse => reponse.json(),
+  error => console.log("La requête a échoué")
+)
+const promise 2 = promise1.then(
+   data => console.log(data),
+   error => console.log("Les données n'ont pas pu être décodées")
+)
+```
 
-La méthode then() renvoie une nouvelle promesse, différente de la première :
+La deuxième promesse `promise2` ne peut pas réaliser sans que la première promesse soit résolue.  Si elle réussie, cela indique que `promise1` a forcément réussie.
+A l'inverse, si une erreur se produit lors de la promesse 1, la promesse 2 sera forcément un échec. Si on ne soucie pas de différencier les messages d'erreurs (c'est généralement le cas), on peut alors simplifier le code précédent avec `catch` :
 
-const promise = faireQqc();
-const promise2 = promise.then(successCallback, failureCallback);
+``` 
+const promise1 = fetch(`https://randomuser.me/api/?nat=${nationalite}`)
+.then(reponse => reponse.json())
+)
+.then(data => console.log(data))
+.catch(error => console.log("La requête a échoué"))
+```
 
-ou encore :
-
-const promise2 = faireQqc().then(successCallback, failureCallback);
-
-La deuxième promesse (promise2) indique l'état de complétion, pas uniquement pour faireQqc() mais aussi pour le callback qui lui a été passé (successCallback ou failureCallback) qui peut aussi être une fonction asynchrone qui renvoie une promesse. Lorsque c'est le cas, tous les callbacks ajoutés à promise2 forment une file derrière la promesse renvoyée par successCallback ou failureCallback.
-
-Autrement dit, chaque promesse représente l'état de complétion d'une étape asynchrone au sein de cette succession d'étapes.
-
-Auparavant, l'enchaînement de plusieurs opérations asynchrones déclenchait une pyramide dantesque de callbacks :
-
-faireQqc(function(result) {
-  faireAutreChose(result, function(newResult) {
-    faireUnTroisiemeTruc(newResult, function(finalResult) {
-      console.log('Résultat final :' + finalResult);
-    }, failureCallback);
-  }, failureCallback);
-}, failureCallback);
-
-Grâce à des fonctions plus modernes et aux promesses, on attache les callbacks aux promesses qui sont renvoyées. On peut ainsi construire une chaîne de promesses :
-
-faireQqc().then(function(result) {
-  return faireAutreChose(result);
-})
-.then(function(newResult) {
-  return faireUnTroisiemeTruc(newResult);
-})
-.then(function(finalResult) {
-  console.log('Résultat final : ' + finalResult);
-})
-.catch(failureCallback);
-
-Les arguments passés à then sont optionnels. La forme catch(failureCallback) est un alias plus court pour then(null, failureCallback). Ces chaînes de promesses sont parfois construites avec des fonctions fléchées :
-
-faireQqc()
-.then(result => faireAutreChose(result))
-.then(newResult => faireUnTroisiemeTruc(newResult))
-.then(finalResult => {
-  console.log('Résultat final : ' + finalResult);
-})
-.catch(failureCallback);
-
-Important : cela implique que les fonctions asynchrones renvoient toutes des promesses, sinon les callbacks ne pourront être chaînés et les erreurs ne seront pas interceptées (les fonctions fléchées ont une valeur de retour implicite si les accolades ne sont pas utilisées : () => x est synonyme de () => { return x; }).
-Chaînage après un catch
-
-Il est possible de chaîner de nouvelles actions après un rejet, c'est-à-dire un catch. C'est utile pour accomplir de nouvelles actions après qu'une action ait échoué dans la chaine. Par exemple :
-
-new Promise((resolve, reject) => {
-    console.log('Initial');
-
-    resolve();
-})
-.then(() => {
-    throw new Error('Something failed');
-        
-    console.log('Do this');
-})
-.catch(() => {
-    console.error('Do that');
-})
-.then(() => {
-    console.log('Do this whatever happened before');
-});
-
-Cela va produire la sortie suivante :
-
-Initial
-Do that
-Do this whatever happened before
-
-Notez que le texte "Do this" n'est pas affiché car l'erreur "Something failed" a produit un rejet.
-Propagation des erreurs
-
-Dans les exemples précédents, failureCallback était présent trois fois dans la pyramide de callbacks et une seule fois, à la fin, dans la chaîne des promesses :
-
-faireQqc()
-.then(result => faireAutreChose(result))
-.then(newResult => faireUnTroisiemeTruc(newResult))
-.then(finalResult => console.log('Résultat final : ' + finalResult))
-.catch(failureCallback);
-
-En fait, dès qu'une exception est levée, la chaîne de promesses utilisera le premier catch() ou onRejected disponible. Ce fonctionnement est assez proche de ce qu'on peut trouver pour du code synchrone :
-
-try {
-  const result = syncFaireQqc();
-  const newResult = syncFaireQqcAutre(result);
-  const finalResult = syncFaireUnTroisiemeTruc(newResult);
-  console.log('Résultat final : ' + finalResult);
-} catch(error) {
-  failureCallback(error);
-}
 
 ## Gérer des opérations asynchrones avec `async/await`
 
-Cette symétrie entre le code asynchrone et le code synchrone atteint son paroxysme avec le couple d'opérateurs async/await d'ECMAScript 2017:
+La version ES2017 a introduit le couple d'opérateurs `async`/`await`, couramment utilisé dans d'autres langages (tels que Python).
+Une fonction qui attend une autre fonction grâce à `await` est nécessairement asynchrone. La fonction est alors préfixée avec `async` et l'appel à une telle fonction nécessite d'utiliser `await`.
+
+La syntaxe suivante est équivalente au bloc précédent. Elle paraît plus familière, mais sa familiarité risque justement de vous jouer des tours en oubliant de différencier les parties synchrones des parties asynchrones dans votre code.
+
 
 ```js
 async function toto() {
   try {
-    const result = await faireQqc();
-    const newResult = await faireQqcAutre(result);
-    const finalResult = await faireUnTroisiemeTruc(newResult);
-    console.log('Résultat final : ' + finalResult);
+	const reponse = await fetch(`https://randomuser.me/api/?nat=${nationalite}`)
+	const data = await reponse.json()
   } catch(error) {
-    failureCallback(error);
+	console.log("La requête a échoué"))
   }
 }
 ```
 
-Ce fonctionnement est construit sur les promesses et faireQqc() est la même fonction que celle utilisée dans les exemples précédents.
-
-Les promesses permettent de résoudre les problèmes de cascades infernales de callbacks notamment en interceptant les différentes erreurs (exceptions et erreurs de programmation). Ceci est essentiel pour obtenir une composition fonctionnelle des opérations asynchrones.
-Évènements liés à la rupture d'une promesse
-
-Lorsqu'une promesse est rompue/rejetée, un des deux évènements suivants est envoyé au niveau de la portée globale (window ou Worker si le script est utilisé dans un worker) :
-
-rejectionhandled
-    Cet évènement est envoyé lorsqu'une promesse est rompue et après que le rejet ai été traité par la fonction reject associée à la promesse.
-unhandledrejection
-    Cet évènement est envoyé lorsque la promesse est rompue et qu'aucune fonction n'a été définie pour gérer le rejet de la promesse.
-
-Dans les deux cas, l'évènement (dont le type est PromiseRejectionEvent) aura deux propriétés :
-
-promise
-    La promesse qui a été rompue.
-reason
-    La raison pour laquelle la promesse a été rompue.
-
-Gérer ces évènements permet d'avoir une ultime méthode pour gérer le rejet des promesses. Cela peut notamment s'avérer utile pour le débogage. Ces évènements sont déclenchés au niveau global et permettent ainsi d'intercepter les erreurs pour chaque contexte (fenêtre ou worker)
-
-window.addEventListener("unhandledrejection", event => {
-  // Examiner la ou les promesse(s) qui posent problème en debug
-  // Nettoyer ce qui doit l'être quand ça se produit en réel
-
-}, false);
-
-## Envoyer des requêtes à un serveur
-
-TODO appeler à random.me
 
 ## Placer ses requêtes dans un composant React au bon endroit grâce aux cycles de vie
+ 
+A quel endroit faut-il lancer des requêtes dans un composant React ? 
+Si la requête est dans `render`, elle sera exécutée à chaque nouvelle affichage. Puisqu'il y a une nouvelle affichage à chaque changement d'un état local dans le composant (ou l'un de ses parents), cela risque de consommer beaucoup de bande passante.
+
+Le constructeur du composant semble, de prime abord, être plus adapté. Cependant, la résolution des promesses va très souvent faire appel à `setState` et appeler `setState` avant que `render` n'ait été appelée risque de poser des problèmes à React.
+
+Heureusement, il existe d'autres méthodes dans un composant React : celles méthodes forment le cycle de vie d'un composant.
+
+Lorsqu'un composant est créé, les méthodes suivantes sont appelés (dans l'ordre) : 
+
+- `constructor()` ;
+- `static getDerivedStateFromProps()` est une fonction [rarement utilisé](https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#when-to-use-derived-state) pour retourner un nouveau `state` à partir des `props` ;
+- `render()` ;
+- `componentDidMount()` : précisément LA méthode à utiliser pour lancer des requêtes HTTP.
+
+Continuous l'analyse du cycle de vie d'un composant React. Lorsqu'un `props` ou un `state` est modifié, l'affichage du composant se met à jour, c'est-à-dire que `render` est ré-exécuté. En réalité, toute une série de méthodes sont appelées (dans l'ordre) :
+
+ - `static getDerivedStateFromProps()` ;
+ - `shouldComponentUpdate()` : permet de bloquer l'appel à `render` (coûteux en temps de calcul) si on se rend compte que la modification du `state` ou `props` n'affecte pas réellement l'affichage ;
+ - `render()`
+ - `getSnapshotBeforeUpdate()` : bien que située après `render`, cette méthode est appelée après la modification réelle du DOM et permet de stocker des informations avant de le modifier (telles que la position du curseur ou de la barre de défilement) ;
+ - `componentDidUpdate()` : typiquement pour corriger la position du curseur.
+
+
+Enfin, vous pourrez rencontrer trois autres méthodes :
+
+- `componentWillUnmount()` est appelé juste avant la destruction d'un composant, afin de fermer des ressources maintenues ouverte ;
+- `static getDerivedStateFromError()` modifie l'état local lorsqu'une erreur se produit ; cela sert, par exemple, à stocker un message d'erreur ;
+- `componentDidCatch()` est appelé quand une erreur se produit.
+
+Comme indiqué, la méthode `componentDidMount` est à privilégier pour faire des appels à un serveur :
+
 ```
-class MyComponent extends React.Component {
+
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       error: null,
       isLoaded: false,
-      items: []
+      users: []
     };
   }
 
   componentDidMount() {
-    fetch("https://api.example.com/items")
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            isLoaded: true,
-            items: result.items
-          });
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
+    const { nat, numUsers } = this.props;
+    fetch(`https://randomuser.me/api/?nat=${nat}&results=${numUsers}`)
+      .then((res) => res.json())
+      .then((result) => {
+        this.setState({
+          isLoaded: true,
+          users: result.results
+        });
+      })
+      .catch((error) => {
+        this.setState({
+          isLoaded: true,
+          error
+        });
+      });
   }
 
   render() {
-    const { error, isLoaded, items } = this.state;
+    const { error, isLoaded, users } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
       return (
-        <ul>
-          {items.map(item => (
-            <li key={item.id}>
-              {item.name} {item.price}
-            </li>
-          ))}
-        </ul>
+        <div className="App">
+          <h1>React network</h1>
+          <h2>Le réseau social des pro de React!</h2>
+          <main className="main-area">
+            <div className="cards">
+              {users.map((user, index) => {
+                return <User {...user} key={index} />;
+              })}
+            </div>
+          </main>
+        </div>
       );
     }
   }
 }
 ```
 
+[![Le code en action](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/react-fetch-example-7dfuq)
+
 ## Utiliser le `hook` `useEffect` pour les appels aux backends
 
+Quel est l'équivalent de `componentDidMount` pour les composants définis sous la forme ? `useEffect` !
+A vrai dire, le hook `useEffect` est plutôt l'équivalent de `componentDidMount`, `componentWillUnmount` et `componentDidUpdate`. 
+ `useEffect` reçoit en paramètre une fonction de rappel, laquelle est appelée après chaque modification du DOM par React.
+
 ```jsx
-function MyComponent() {
+import React, { useState, useEffect } from 'react';
+
+function BoutonCompteur() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {    document.title = `Vous avez cliqué ${count} fois`;  });
+  return (
+    <div>
+      <p>Vous avez cliqué {count} fois.</p>
+      <button onClick={() => setCount(count + 1)}>
+        Cliquez ici
+      </button>
+    </div>
+  );
+}
+```
+
+Placer la requête HTTP dans cette fonction de rappel reviendrait à faire beaucoup d'appels alors même qu'un seul suffit. Heureusement, `useEffect` accepte un second paramètre, indiquant une liste de variables à laquelle il s'abonne. La fonction de rappel de `useEffect` ne sera pas appelée tant que l'une de ces variables ne change pas.
+En donnant une liste vide à `useEffect`, la fonction de rappel ne sera exécutée qu'une seule fois : c'est exactement ce que nous souhaitions !
+
+```jsx
+function App({nat, numUsers}) {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState([]);
+  const [users, setUsers] = useState([]);
 
   // Note: the empty deps array [] means
   // this useEffect will run once
   // similar to componentDidMount()
   useEffect(() => {
-    fetch("https://api.example.com/items")
+    fetch(`https://randomuser.me/api/?nat=${nat}&results=${numUsers}`)
       .then(res => res.json())
-      .then(
-        (result) => {
+      .then(result => {
           setIsLoaded(true);
-          setItems(result);
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
+          setUsers(result.results);
+      })
+      .catch((error) => {
           setIsLoaded(true);
           setError(error);
-        }
-      )
+      });
   }, [])
 
   if (error) {
@@ -300,14 +265,24 @@ function MyComponent() {
     return <div>Loading...</div>;
   } else {
     return (
-      <ul>
-        {items.map(item => (
-          <li key={item.id}>
-            {item.name} {item.price}
-          </li>
-        ))}
-      </ul>
+        <div className="App">
+          <h1>React network</h1>
+          <h2>Le réseau social des pro de React!</h2>
+          <main className="main-area">
+            <div className="cards">
+              {users.map((user, index) => {
+                return <User {...user} key={index} />;
+              })}
+            </div>
+          </main>
+        </div>
     );
   }
 }
 ``` 
+
+## Ressources complémentaires 
+
+- Les [promesses](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises) peuvent aussi s'utiliser en groupe (composition) et ont une API poussée pour gérer les erreurs ;
+- [`useEffect`](https://reactjs.org/docs/hooks-effect.html) contient d'autres fonctionnalités importantes.
+
