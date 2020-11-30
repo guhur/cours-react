@@ -2,7 +2,9 @@
 
 ## Analyse de code
 
-Analysez le [code situé du projet](https://codesandbox.io/s/tp-props-q0wln?file=/src/App.js) puis répondez aux questions.
+Analysez le [code situé du projet](github.com/guhur/tp-props) puis répondez aux questions.
+
+[![CodeSandbox](https://codesandbox.io/s/tp-props-q0wln?file=/src/App.js&theme=dark)
 
 
 **1. Quelle ligne charge le fichier JSON dans le code ?**
