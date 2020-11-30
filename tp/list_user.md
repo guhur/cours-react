@@ -2,7 +2,7 @@
 
 ## Analyse de code
 
-Analysez le [code situé du projet](github.com/guhur/tp-props) puis répondez aux questions.
+Analysez le [code situé du projet](https://github.com/guhur/tp-props) puis répondez aux questions.
 
 [![CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/tp-props-q0wln?file=/src/App.js&theme=dark)
 
