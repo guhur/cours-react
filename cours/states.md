@@ -12,8 +12,8 @@ N'essayez pas de synchroniser les états de plusieurs composants.
 
 Voici quelques ressources utiles pour mieux comprendre selon quels critères choisir entre props et state :
 
-    [Props vs State](https://github.com/uberVU/react-guide/blob/master/props-vs-state.md)
-    [ReactJS: Props vs. State](https://lucybain.com/blog/2016/react-state-vs-pros/)
+- [Props vs State](https://github.com/uberVU/react-guide/blob/master/props-vs-state.md)
+- [ReactJS: Props vs. State](https://lucybain.com/blog/2016/react-state-vs-pros/)
 
 
 ## Initialiser le state
@@ -284,4 +284,6 @@ export default function App() {
   }
 }
 ```
-[codesandbox](https://codesandbox.io/s/demo-multi-states-ll1s0?file=/src/App.js)
+
+
+[![Edit demo-multi-states](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/demo-multi-states-ll1s0?fontsize=14&hidenavigation=1&theme=dark)
