@@ -176,7 +176,7 @@ class Counter extends React.Component {
     this.state = {
       count: 0
     };
-   this.incrementCount.bind(this); // on lie this interne et this externe
+   this.incrementCount = this.incrementCount.bind(this); // on lie this interne et this externe
   }
 
   incrementCount() {
