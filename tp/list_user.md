@@ -33,7 +33,7 @@ Analysez le [code situé du projet](github.com/guhur/tp-props) puis répondez au
 
 **11. Faites un test de "capture d'instantanés" en suivant les indications de la documentation**
 
-**12. Proposez 3 autres tests**
+**12. Proposez trois autres tests (pas besoin de les implémenter)**
 
 
 ## Mini-projet 
