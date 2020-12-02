@@ -22,8 +22,8 @@ const Menu = ({theme}) => (<div><ThemedButton theme={props.theme} /></div>);
 const ThemedButton = ({theme}) => {
   const style =  (
   	theme === "light"
-	? {color: "black"; backgoundColor: "white}
-	: {color: white; backgoundColor: black}
+	? {color: "black"; backgoundColor: "white"}
+	: {color: "white"; backgoundColor: "black"}
   )
   return (<button style={style} />);
 }
