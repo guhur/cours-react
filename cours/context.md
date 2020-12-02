@@ -22,8 +22,8 @@ const Menu = ({theme}) => (<div><ThemedButton theme={props.theme} /></div>);
 const ThemedButton = ({theme}) => {
   const style =  (
   	theme === "light"
-	? {color: "black"; backgoundColor: "white"}
-	: {color: "white"; backgoundColor: "black"}
+	? {color: "black", backgoundColor: "white"}
+	: {color: "white", backgoundColor: "black"}
   )
   return (<button style={style} />);
 }
@@ -155,8 +155,8 @@ La syntaxe du HOC est certes complexe, mais elle allège la syntaxe des composan
 const Button = ({theme}) => {
   const style =  (
   	theme === "light"
-	? {color: "black"; backgoundColor: "white"}
-	: {color: "white"; backgoundColor: "black"}
+	? {color: "black", backgoundColor: "white"}
+	: {color: "white", backgoundColor: "black"}
   )
   return (<button style={style} />);
 }
@@ -205,8 +205,8 @@ const Menu = () => (<div><ThemedButton /></div>);
 const Button = ({theme, toggleTheme}) => {
   const style =  (
   	theme === "light"
-	? {color: "black"; backgoundColor: "white"}
-	: {color: "white"; backgoundColor: "black"}
+	? {color: "black", backgoundColor: "white"}
+	: {color: "white", backgoundColor: "black"}
   )
   return (<button style={style}  onClick={toggleTheme}>Changer le thème</button>);
 }
