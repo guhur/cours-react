@@ -205,8 +205,8 @@ const Menu = () => (<div><ThemedButton /></div>);
 const Button = ({theme, toggleTheme}) => {
   const style =  (
   	theme === "light"
-	? {color: "black"; backgoundColor: "white}
-	: {color: white; backgoundColor: black}
+	? {color: "black"; backgoundColor: "white"}
+	: {color: "white"; backgoundColor: "black"}
   )
   return (<button style={style}  onClick={toggleTheme}>Changer le thème</button>);
 }
