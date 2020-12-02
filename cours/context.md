@@ -155,8 +155,8 @@ La syntaxe du HOC est certes complexe, mais elle allège la syntaxe des composan
 const Button = ({theme}) => {
   const style =  (
   	theme === "light"
-	? {color: "black"; backgoundColor: "white}
-	: {color: white; backgoundColor: black}
+	? {color: "black"; backgoundColor: "white"}
+	: {color: "white"; backgoundColor: "black"}
   )
   return (<button style={style} />);
 }
@@ -215,6 +215,20 @@ const ThemedButton = withTheme(Button);
 ReactDOM.render(<App />, document.root);
 ```
 
+## Utiliser le contexte pour un composant défini sous la forme d'une fonction
+
+On accède au contexte grâce à la fonction `useContext` :
+
+```jsx
+function ButtonWithThemeContext() {
+  const theme = useContext(ThemeContext);
+  return (    
+  	<button style={{ background: theme.background, color: theme.foreground }}>
+	Bouton stylisé depuis le contexte theme   
+	</button>  
+);
+}
+```
 
 
 ## Plus de ressources
